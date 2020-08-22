@@ -5,10 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repository\" />
-    <Folder Include="UnitOfWork\" />
-    <Folder Include="Context\" />
-    <Folder Include="Interface\" />
+    <Compile Remove="Migrations\20200822211304_InsertBikeTypes.cs" />
+    <Compile Remove="Migrations\20200822211304_InsertBikeTypes.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BikeRental.Core\BikeRental.Core.csproj" />
   </ItemGroup>
 
 </Project>

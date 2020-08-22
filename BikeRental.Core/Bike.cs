@@ -1,9 +1,12 @@
-﻿using System;
-
-namespace BikeRental.Core
+﻿namespace BikeRental.Core
 {
-    public class Bike
+    public class Bike : BaseEntity
     {
-        public int MyProperty { get; set; }
+        public string Name { get; set; }
+        public Status Status { get; set; }
+        public ushort Price { get; set; }
+
+        public BikeType BikeType { get; set; }
+        public int BikeTypeId { get; set; }
     }
 }
