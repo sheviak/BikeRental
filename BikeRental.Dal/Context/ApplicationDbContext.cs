@@ -21,6 +21,10 @@ namespace BikeRental.Dal.Context
                 .WithMany(x => x.Bikes)
                 .HasForeignKey(x => x.BikeTypeId);
 
+            modelBuilder.Entity<Bike>()
+                .Property(x => x.Status)
+                .HasDefaultValue(Status.Free);
+
             base.OnModelCreating(modelBuilder);
         }
     }

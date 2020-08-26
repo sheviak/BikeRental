@@ -15,10 +15,10 @@ namespace BikeRental.Infrastructure
     {
         public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<IRepository<Bike>, Repository<Bike>>();
-
-            services.AddTransient<IBikeService, BikeService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IRepository<Bike>, Repository<Bike>>();
+            
+            services.AddScoped<IBikeService, BikeService>();
 
             var connection = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));

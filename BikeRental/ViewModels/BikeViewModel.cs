@@ -1,4 +1,5 @@
 ﻿using BikeRental.Core;
+using System.ComponentModel.DataAnnotations;
 
 namespace BikeRental.ViewModels
 {
@@ -6,7 +7,7 @@ namespace BikeRental.ViewModels
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ushort Price { get; set; }
+        public float Price { get; set; }
         public string Type { get; set; }
         public Status Status { get; set; }
     }

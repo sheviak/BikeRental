@@ -12,7 +12,6 @@ namespace BikeRental.Dal.Interface
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             params string[] includeProperties);
 
-        IEnumerable<TEntity> Get(params string[] includeProperties);
         TEntity Get(int id);
         void Insert(TEntity entity);
         void Delete(int id);

@@ -45,18 +45,6 @@ namespace BikeRental.Dal.Repository
             }
         }
 
-        public virtual IEnumerable<TEntity> Get(params string[] includeProperties)
-        {
-            IQueryable<TEntity> query = _dbSet;
-
-            foreach (var includeProperty in includeProperties)
-            {
-                query = query.Include(includeProperty);
-            }
-
-            return query.ToList();
-        }
-
         public virtual TEntity Get(int id)
         {
             return _dbSet.Find(id);
