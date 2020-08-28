@@ -1,4 +1,4 @@
-﻿namespace BikeRental.ViewModels
+﻿    namespace BikeRental.ViewModels
 {
     public class BikeTypesViewModel
     {

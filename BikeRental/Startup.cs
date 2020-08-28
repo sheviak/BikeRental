@@ -29,7 +29,7 @@ namespace BikeRental
             .CreateMapper();
 
             services.AddSingleton(mapper);
-
+            services.AddCors();
             services.AddControllers();
         }
 
@@ -41,6 +41,14 @@ namespace BikeRental
             }
 
             app.UseRouting();
+
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+            );
+
+            app.UseHttpsRedirection();
 
             app.UseEndpoints(endpoints =>
             {

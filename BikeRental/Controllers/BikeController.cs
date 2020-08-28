@@ -79,14 +79,16 @@ namespace BikeRental.Controllers
             return NotFound();
         }
 
-        [HttpPut("change-status/{id}")]
-        public IActionResult ChangeStatus(int id)
+        [HttpPut("change-status")]
+        public IActionResult ChangeStatus([FromBody] int id)
         {
             if (!this.bikeService.CheckIfBikeExist(id))
                 return NotFound();
 
             var bike = this.bikeService.ChangeBikeStatus(id);
-            return Ok(bike);
+            var bikeVm = this.mapper.Map<BikeViewModel>(bike);
+
+            return Ok(bikeVm);
         }
     }
 }

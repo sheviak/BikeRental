@@ -1,5 +1,4 @@
 ﻿using BikeRental.Core;
-using System.ComponentModel.DataAnnotations;
 
 namespace BikeRental.ViewModels
 {
