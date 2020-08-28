@@ -1,4 +1,5 @@
 using AutoMapper;
+using BikeRental.Exception;
 using BikeRental.Infrastructure;
 using BikeRental.Mapping;
 using Microsoft.AspNetCore.Builder;
@@ -30,7 +31,10 @@ namespace BikeRental
 
             services.AddSingleton(mapper);
             services.AddCors();
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                options.Filters.Add(typeof(GlobalExceptionFilter));
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -49,6 +53,7 @@ namespace BikeRental
             );
 
             app.UseHttpsRedirection();
+            app.UseStatusCodePages();
 
             app.UseEndpoints(endpoints =>
             {
