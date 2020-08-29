@@ -1,0 +1,11 @@
+body { background: #F5F5F5; }
+.btn-cancel, .btn-rent, .btn-submit { color: white; width: 100%; }
+.new-rent { background: #E9EAEE; padding: 15px; }
+.rent { background: #FFFFFF; display: flex; margin: 15px 0 15px 0px; }
+.new-rent, .rent { border: 1px solid #DCDCDC; }
+.btn-submit { background: #23BA99; }
+.btn-cancel { background: #F2323F; }
+.btn-rent { background: #3750C7; }
+.block { margin-top: 50px; }
+.block h4 { margin-bottom: 20px; }
+.t-v-center { display: flex; align-items: center; }
