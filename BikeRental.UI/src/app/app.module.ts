@@ -1,11 +1,9 @@
 import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule}   from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { AppComponent }   from './app.component';
+import { BikeSharedModule } from './modules/bike.shared.module';
 
 @NgModule({
-    imports:      [ BrowserModule, FormsModule, HttpClientModule, ReactiveFormsModule ],
+    imports:      [ BikeSharedModule ],
     declarations: [ AppComponent ],
     bootstrap:    [ AppComponent ]
 })

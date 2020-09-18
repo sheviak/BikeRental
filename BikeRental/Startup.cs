@@ -4,6 +4,7 @@ using BikeRental.Infrastructure;
 using BikeRental.Mapping;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -31,9 +32,11 @@ namespace BikeRental
 
             services.AddSingleton(mapper);
             services.AddCors();
-            services.AddControllers(options =>
+            services.AddControllers();
+
+            services.Configure<ApiBehaviorOptions>(options =>
             {
-                options.Filters.Add(typeof(GlobalExceptionFilter));
+                options.InvalidModelStateResponseFactory = ctx => new ValidationErrorDetailsResult();
             });
         }
 
@@ -43,6 +46,8 @@ namespace BikeRental
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware(typeof(GlobalExceptionMiddleware));
 
             app.UseRouting();
 

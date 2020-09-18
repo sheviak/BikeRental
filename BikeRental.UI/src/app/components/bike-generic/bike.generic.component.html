@@ -1,0 +1,23 @@
+<div class="rent p-3">
+    <div class="col t-v-center">
+        {{ bike.name }} / {{ bike.type }} / ${{ bike.price }}
+    </div>
+
+    <div *ngIf="bike.status == 0;then content else other_content"></div> 
+
+    <ng-template #content>
+        <div class="col-2">
+            <button type="button" class="btn btn-rent align-self-center" (click)="change(bike)">Rent</button>
+        </div>
+        <div class="col-2">
+            <button type="button" class="btn btn-cancel align-self-center" (click)="delete(bike)">Delete</button>
+        </div>
+    </ng-template>
+
+    <ng-template #other_content>
+        <div class="col-2">
+            <button type="button" class="btn btn-cancel align-self-center" (click)="change(bike)">Cancel rent</button>
+        </div>
+    </ng-template>
+   
+</div>

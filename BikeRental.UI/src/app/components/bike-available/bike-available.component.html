@@ -1,0 +1,8 @@
+<h4>🚲 Available bicycles ({{ countFreeBikes }})</h4>
+<ng-template ngFor let-bike [ngForOf]="bikeAvailables">
+    <ng-template [ngIf]="bike.status == 0">
+        <bike-generic-app [bike]="bike" (onChanged)="change($event)" (onDeleted)="delete($event)">
+            
+        </bike-generic-app>
+    </ng-template>
+</ng-template>

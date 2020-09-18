@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import { InsertBike } from '../models/InserBike';
+import { environment } from 'src/environments/environment';
  
 @Injectable()
 export class DataService {
  
-    private url = "https://localhost:44353/api/bike";
+    private url : string = environment.apiUrl;
  
-    constructor(private http: HttpClient) {
-    }
+    constructor(private http: HttpClient) {}
  
     getBikes() {
         return this.http.get(this.url);
@@ -17,7 +17,7 @@ export class DataService {
     getBikeTypes() {
         return this.http.get(this.url + '/types');
     }
-     
+    
     createBike(bike: InsertBike) {
         return this.http.post(this.url, bike);
     }

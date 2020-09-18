@@ -1,0 +1,40 @@
+<h4>🤑 Create new rent</h4> 
+<div class="new-rent">
+    <form class="d-flex" #bikeForm="ngForm" novalidate (ngSubmit)="submit(bikeForm)">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="name">Bike name</label>
+                        <input type="text" placeholder="Super bike" class="form-control" id="name" name="name" ngModel required>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="type">Bike type</label>
+                        <select class="form-control" id="type" name="type" ngModel required>
+                            <option value="" disabled selected>Select bike type</option>
+                            <option *ngFor="let type of bikeTypes" [ngValue]="type">{{ type.name }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-group">
+                        <label for="price">Rent price</label>
+                        <input type="number" min="0" step="0.1" placeholder="10.0" class="form-control" id="price" name="price" ngModel required>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="h-100 mt-2 d-flex">
+                        <button type="submit" class="btn btn-submit align-self-center" [disabled]="bikeForm.invalid">Submit rent</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-danger">
+                    {{ errors }}
+                </div>  
+            </div>
+        </div>
+    </form>
+</div>

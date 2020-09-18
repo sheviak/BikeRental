@@ -1,0 +1,8 @@
+<h4>🤩 Your rent (Total: ${{ totalPrice | number:'1.0-2'}})</h4>
+<ng-template ngFor let-bike [ngForOf]="rentBikes" >
+    <ng-template [ngIf]="bike.status == 1">
+        <bike-generic-app [bike]="bike" (onChanged)="change($event)">
+
+        </bike-generic-app>
+    </ng-template>
+</ng-template>
