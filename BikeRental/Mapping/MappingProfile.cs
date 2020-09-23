@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BikeRental.Core;
 using BikeRental.ViewModels;
+using BikeRental.ViewModels.Auth;
 
 namespace BikeRental.Mapping
 {
@@ -15,6 +16,9 @@ namespace BikeRental.Mapping
             CreateMap<EditBikeViewModel, Bike>();
 
             CreateMap<BikeType, BikeTypesViewModel>();
+
+            CreateMap<RegisterViewModel, ApplicationUser>()
+                .ForMember(x => x.UserName, x => x.MapFrom(x => x.Email));
         }
     }
 }

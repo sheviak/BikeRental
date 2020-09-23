@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
-import { InsertBike } from '../models/InserBike';
+import { InsertBike } from 'src/app/models/insert.bike';
 import { environment } from 'src/environments/environment';
  
 @Injectable()
 export class DataService {
  
-    private url : string = environment.apiUrl;
+    private url : string = environment.apiBikeUrl;
  
     constructor(private http: HttpClient) {}
  

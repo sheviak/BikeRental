@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { MapService } from 'src/app/services/map.service';
-import { Bike } from 'src/app/models/Bike'
+import { Bike } from 'src/app/models/bike'
 
 @Component({
     selector: 'bike-available-app',

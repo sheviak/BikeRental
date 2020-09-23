@@ -5,6 +5,7 @@ using BikeRental.Dal.Context;
 using BikeRental.Dal.Interface;
 using BikeRental.Dal.Repository;
 using BikeRental.Dal.UnitOfWork;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,10 @@ namespace BikeRental.Infrastructure
 
             var connection = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
+
+            services.AddIdentity<ApplicationUser, IdentityRole<int>>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
         }
     }
 }

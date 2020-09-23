@@ -1,9 +1,11 @@
 ﻿using BikeRental.Core;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BikeRental.Dal.Context
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
     {
         public DbSet<Bike> Bikes { get; set; }
         public DbSet<BikeType> BikeTypes { get; set; }
@@ -24,6 +26,19 @@ namespace BikeRental.Dal.Context
             modelBuilder.Entity<Bike>()
                 .Property(x => x.Status)
                 .HasDefaultValue(Status.Free);
+
+            //modelBuilder.Entity<Bike>()
+            //    .HasOne(x => x.ApplicationUser)
+            //    .WithMany(x => x.Bikes)
+            //    .HasForeignKey(x => x.ApplicationUserId);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(x => x.Email)
+                .HasMaxLength(255);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(x => x.NormalizedEmail)
+                .HasMaxLength(255);
 
             base.OnModelCreating(modelBuilder);
         }

@@ -1,13 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { DataService } from 'src/app/services/data.service';
-import { MapService } from 'src/app/services/map.service';
-import { BikeType } from 'src/app/models/BikeType';
+import { BikeType } from 'src/app/models/bike.type';
 import { NgForm } from '@angular/forms';
 
 @Component({
     selector: 'bike-form-app',
-    templateUrl: './bike-form.component.html',
-    providers: [ DataService, MapService ]
+    templateUrl: './bike-form.component.html'
 })
 
 export class BikeFormComponent {

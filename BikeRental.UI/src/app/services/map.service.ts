@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { InsertBike } from "src/app/models/InserBike";
+import { InsertBike } from "src/app/models/insert.bike";
 
 @Injectable()
 export class MapService {

@@ -1,0 +1,28 @@
+<div class="block">
+    <h4>Upload your photos</h4>
+    <form #form="ngForm" novalidate (ngSubmit)="submit()">
+        <input type="file" name="image" (change)="onFileChanged($event)" ngModel required>
+        <input type="submit" value="send" [disabled]="form.invalid">
+    </form>
+</div>
+
+<div class="block">
+    <h4>Photo gallery</h4>
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-6 mb-3 thumb" *ngFor="let photo of photos">
+            <a data-fancybox="gallery" href="{{ photo }}">
+                <img class="img-fluid" src="{{ photo }}">
+            </a>
+        </div>
+    </div>
+</div>
+
+<div [className]="isLoader ? 'active' : 'inactive'">
+    <div class="shadow"></div>
+    <div class="popup">
+        <svg class="spinner" viewBox="0 0 50 50">
+            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+        </svg>
+        <p class="pt-3">Photo is uploading... Please wait ...</p>
+    </div>
+</div>

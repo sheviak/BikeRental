@@ -1,13 +1,17 @@
 using AutoMapper;
+using BikeRental.Auth;
 using BikeRental.Exception;
 using BikeRental.Infrastructure;
 using BikeRental.Mapping;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace BikeRental
 {
@@ -22,6 +26,32 @@ namespace BikeRental
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var authOptions = Configuration.GetSection("Token");
+            var authValue = authOptions.Value;
+            services.Configure<AuthOptions>(authOptions);
+
+            services
+                .AddAuthentication(options =>
+                    {
+                        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+                    })
+                .AddJwtBearer(jwtBearerOptions =>
+                    {
+                        jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters()
+                        {
+                            ValidateIssuer = true,
+                            ValidIssuer = Configuration["Token:Issuer"],
+                            ValidateAudience = true,
+                            ValidAudience = Configuration["Token:Audience"],
+                            ValidateLifetime = true,
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:Key"]))
+                        };
+                    });
+
             ServiceInitializer.ConfigureServices(services, Configuration);
 
             var mapper = new MapperConfiguration(mc =>
@@ -59,6 +89,9 @@ namespace BikeRental
 
             app.UseHttpsRedirection();
             app.UseStatusCodePages();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

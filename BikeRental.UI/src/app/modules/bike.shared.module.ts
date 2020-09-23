@@ -17,4 +17,4 @@ import { BikeAvailableComponent } from 'src/app/components/bike-available/bike-a
     declarations: [ BikeFormComponent, BikeRentComponent, BikeAvailableComponent, BikeGenericComponent ]
 })
 
-export class BikeSharedModule { }  
+export class BikeSharedModule { }

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Bike } from 'src/app/models/Bike'
+import { Bike } from 'src/app/models/bike'
 
 @Component({
     selector: 'bike-generic-app',

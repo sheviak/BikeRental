@@ -16,8 +16,10 @@
     "@angular/platform-browser": "^10.0.14",
     "@angular/platform-browser-dynamic": "~10.0.0",
     "@angular/router": "~10.0.0",
+    "@auth0/angular-jwt": "^5.0.1",
     "core-js": "^2.4.1",
     "rxjs": "~6.5.5",
+    "url-polyfill": "^1.1.10",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {

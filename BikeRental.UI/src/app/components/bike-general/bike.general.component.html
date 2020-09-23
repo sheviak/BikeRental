@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="w-100">
+        <div class="block">
+            <bike-form-app [errors]="errors" [bikeTypes]="bikeTypes" (onSubmit)="submit($event)">
+                
+            </bike-form-app>
+        </div>
+        <div class="block">
+            <bike-rent-app [rentBikes]="bikes" [totalPrice]="totalPrice" (onChanged)="changeBikeStatus($event)">
+
+            </bike-rent-app>
+        </div>
+        <div class="block">
+            <bike-available-app [bikeAvailables]="bikes" [countFreeBikes]="countFreeBikes" (onChanged)="changeBikeStatus($event)" (onDeleted)="delete($event)">
+               
+            </bike-available-app>
+        </div>
+    </div>
+</div>
+
+<div [className]="isLoader ? 'active' : 'inactive'">
+    <div class="shadow"></div>
+    <div class="popup">
+        <svg class="spinner" viewBox="0 0 50 50">
+            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+        </svg>
+        <p class="pt-3">Please wait ...</p>
+    </div>
+</div>

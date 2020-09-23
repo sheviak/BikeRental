@@ -11,6 +11,8 @@ body { background: #F5F5F5; }
 .t-v-center { display: flex; align-items: center; }
 .active { display: block; }
 .inactive { display: none; }
+.title { font-size: xx-large; font-weight: 500; }
+.cursor-pointer { cursor: pointer; }
 
 .shadow {
     position: fixed;
