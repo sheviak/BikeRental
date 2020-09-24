@@ -1,7 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace BikeRental.Auth
+namespace BikeRental.Core.Options
 {
     public class AuthOptions
     {

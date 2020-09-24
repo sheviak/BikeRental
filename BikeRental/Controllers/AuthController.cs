@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using BikeRental.Auth;
 using BikeRental.ViewModels.Auth;
 using BikeRental.Core;
+using BikeRental.Core.Options;
 
 namespace BikeRental.Controllers
 {

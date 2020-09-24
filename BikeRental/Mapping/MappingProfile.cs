@@ -12,6 +12,9 @@ namespace BikeRental.Mapping
             CreateMap<Bike, BikeViewModel>()
                 .ForMember(x => x.Type, x => x.MapFrom(x => x.BikeType.Name));
 
+            CreateMap<Bike, BikePhotoViewModel>()
+                .ForMember(x => x.Type, x => x.MapFrom(x => x.BikeType.Name));
+
             CreateMap<InsertBikeViewModel, Bike>();
             CreateMap<EditBikeViewModel, Bike>();
 

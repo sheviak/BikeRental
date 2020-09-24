@@ -1,5 +1,5 @@
 using AutoMapper;
-using BikeRental.Auth;
+using BikeRental.Core.Options;
 using BikeRental.Exception;
 using BikeRental.Infrastructure;
 using BikeRental.Mapping;
@@ -29,6 +29,9 @@ namespace BikeRental
             var authOptions = Configuration.GetSection("Token");
             var authValue = authOptions.Value;
             services.Configure<AuthOptions>(authOptions);
+
+            var uploadPhotoOptions = Configuration.GetSection("UploadPhotoApi");
+            services.Configure<UploadPhotoApiOptions>(uploadPhotoOptions);
 
             services
                 .AddAuthentication(options =>

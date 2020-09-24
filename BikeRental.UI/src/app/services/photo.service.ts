@@ -10,18 +10,12 @@ export class PhotoService {
 
     constructor(private http: HttpClient){ }
 
-    public uploadPhoto(file: any){
-        
+    public uploadPhoto(file, bikeId){
         let uploadData = new FormData();
-        uploadData.append('image', file, file.name);
-        uploadData.append('secret_key', environment.secret_key);
+        uploadData.append('avatar', file, file.name);
+        uploadData.append('bikeId', bikeId);
 
-        return this.http.post(environment.photoApiUrl, uploadData, {
-            headers: new HttpHeaders().set("Authorization", environment.tokenPhotoApiUrl)
-        });
+        return this.http.post(environment.apiPhotoUrl, uploadData);
     }
 
-    public addToDatabase(link: string){
-        return this.http.post(environment.apiPhotoUrl, link);
-    }
 }

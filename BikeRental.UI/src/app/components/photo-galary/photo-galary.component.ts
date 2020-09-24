@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PhotoService } from 'src/app/services/photo.service';
+import { DataService } from 'src/app/services/data.service';
+import { Bike } from 'src/app/models/bike';
 
 @Component({
   selector: 'photo-galary',
@@ -8,36 +10,39 @@ import { PhotoService } from 'src/app/services/photo.service';
 
 export class PhotoGalaryComponent implements OnInit {
 
-  public selectedFile: File
-  public photos: Array<string> = ["https://i1.imageban.ru/out/2020/09/22/d0b1baaade4786ec6a8113ca53bca49e.jpg", "https://i1.imageban.ru/out/2020/09/22/351189acef5f10c997c8976c93533ce0.jpg"];
-  public isLoader: boolean = false;
+  public bikes: Array<Bike> = [];
+  public selectedFile: File = null;
+  public selectedBike: Bike = null;
 
-  constructor(private up: PhotoService) { }
+  public isLoader: boolean = false;
+  public photos: Array<string> = ["https://i1.imageban.ru/out/2020/09/22/d0b1baaade4786ec6a8113ca53bca49e.jpg", "https://i1.imageban.ru/out/2020/09/22/351189acef5f10c997c8976c93533ce0.jpg"];
+
+  constructor(private up: PhotoService, private ds: DataService) { }
 
   ngOnInit(): void {
-    // upload photos
+    this.isLoader = true;
+    this.ds.getBikes().subscribe(
+        (data: Bike[]) => { this.bikes = data; },
+        error => { console.log(error); this.isLoader = false; },
+        () => { this.isLoader = false; }
+      );
   }
 
   onFileChanged(event) {
-    this.selectedFile = event.target.files[0]
+    this.selectedFile = event.target.files[0];
   }
 
   submit() {
-    this.isLoader = true;
+    // this.isLoader = true;
 
-    this.up.uploadPhoto(this.selectedFile)
+    this.up.uploadPhoto(this.selectedFile, this.selectedBike.id)
       .subscribe(
         (data: any) => {
-          console.log(data.data.link);
-
-          this.up.addToDatabase(data.data.link)
-            .subscribe(
-              (data: string) => { this.photos.push(data); },
-              error => { alert(error); }
-            )
+          console.log(data);
+          
 
         },
-        error => { alert(error); },
+        error => { console.log(error); },
         () => { this.isLoader = false; }
       );
   }

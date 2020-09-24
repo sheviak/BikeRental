@@ -1,5 +1,7 @@
 ﻿using BikeRental.Core;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BikeRental.Bl.Interface
 {
@@ -14,5 +16,6 @@ namespace BikeRental.Bl.Interface
         Bike ChangeBikeStatus(int bikeId);
         IEnumerable<BikeType> GetBikeTypes();
         bool CheckIfBikeExist(int bikeId);
+        Task<Bike> UploadPhotoToBike(IFormFile avatar, int bikeId);
     }
 }

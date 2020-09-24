@@ -27,11 +27,6 @@ namespace BikeRental.Dal.Context
                 .Property(x => x.Status)
                 .HasDefaultValue(Status.Free);
 
-            //modelBuilder.Entity<Bike>()
-            //    .HasOne(x => x.ApplicationUser)
-            //    .WithMany(x => x.Bikes)
-            //    .HasForeignKey(x => x.ApplicationUserId);
-
             modelBuilder.Entity<ApplicationUser>()
                 .Property(x => x.Email)
                 .HasMaxLength(255);

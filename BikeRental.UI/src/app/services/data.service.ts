@@ -3,7 +3,10 @@ import { HttpClient} from '@angular/common/http';
 import { InsertBike } from 'src/app/models/insert.bike';
 import { environment } from 'src/environments/environment';
  
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
+
 export class DataService {
  
     private url : string = environment.apiBikeUrl;
@@ -14,7 +17,7 @@ export class DataService {
         return this.http.get(this.url);
     }
      
-    getBikeTypes() {
+    getBikeTypes() {    
         return this.http.get(this.url + '/types');
     }
     
