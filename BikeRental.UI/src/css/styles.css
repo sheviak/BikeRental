@@ -13,7 +13,7 @@ body { background: #F5F5F5; }
 .inactive { display: none; }
 .title { font-size: xx-large; font-weight: 500; }
 .cursor-pointer { cursor: pointer; }
-
+.bike-card { border: 1px solid grey; text-align: center; }
 .shadow {
     position: fixed;
     z-index: 1001;

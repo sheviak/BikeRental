@@ -14,6 +14,8 @@ import { AUTH_API_URL } from "src/app/app-injection-tokens";
 import { ACCESS_TOKEN_KEY } from "src/app/services/auth.service";
 import { environment } from 'src/environments/environment';
 import { PhotoGalaryComponent } from 'src/app/components/photo-galary/photo-galary.component';
+import { NgEventBus } from 'ng-event-bus';
+import { NotFoundComponent } from "src/app/components/not-found/not-found.component";
 
 export function tokenGetter() {
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -33,9 +35,10 @@ export function tokenGetter() {
         },
       })      
     ],
-    declarations: [ AppComponent, BikeGeneralComponent, RegistrationComponent, LoginComponent, PhotoGalaryComponent ],
+    declarations: [ AppComponent, BikeGeneralComponent, RegistrationComponent, LoginComponent, PhotoGalaryComponent, NotFoundComponent ],
     bootstrap:    [ AppComponent ],
     providers: [
+      NgEventBus,
       {
         provide: APP_BASE_HREF,
         useValue: "/"

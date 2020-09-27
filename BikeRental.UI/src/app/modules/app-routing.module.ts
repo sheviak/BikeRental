@@ -4,6 +4,8 @@ import { LoginComponent } from 'src/app/components/login/login.component';
 import { RegistrationComponent } from 'src/app/components/registration/registration.component';
 import { BikeGeneralComponent } from 'src/app/components/bike-general/bike.general.component';
 import { PhotoGalaryComponent } from "src/app/components/photo-galary/photo-galary.component";
+import { NotFoundComponent } from "src/app/components/not-found/not-found.component";
+import { AuthGuard } from "src/app/guards/auth.guard";
 
 const routes: Routes = [
     {
@@ -12,15 +14,22 @@ const routes: Routes = [
     },
     {
         path: "login",
-        component: LoginComponent
+        component: LoginComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: "registration",
-        component: RegistrationComponent
+        component: RegistrationComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: "photos",
-        component: PhotoGalaryComponent
+        component: PhotoGalaryComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: "**",
+        component: NotFoundComponent
     }
 ];
 

@@ -5,6 +5,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import { RegisterUser } from "src/app/models/register.user";
 import { LoginUser } from "src/app/models/login.user";
+import { ErrorService } from "src/app/services/error.srvice";
 
 export const ACCESS_TOKEN_KEY = 'access_token';
 
@@ -14,28 +15,19 @@ export const ACCESS_TOKEN_KEY = 'access_token';
 
 export class AuthService {
 
-  constructor(private http: HttpClient, @Inject(AUTH_API_URL) private apiUrl: string, private jwtHelpers: JwtHelperService, private router: Router) { }
+  constructor(
+    private http: HttpClient, 
+    @Inject(AUTH_API_URL) private apiUrl: string, 
+    private jwtHelpers: JwtHelperService, 
+    public router: Router,
+    private es: ErrorService) { }
 
   login(user: LoginUser) {
-    return this.http.post(`${this.apiUrl}/login`, user)
-      .subscribe(
-        (res: any) => {
-          localStorage.setItem(ACCESS_TOKEN_KEY, res.access_token);
-          this.router.navigate(['']);
-        },
-        error => { this.showError(error); }
-      );
+    return this.http.post(`${this.apiUrl}/login`, user);
   }
 
   registration(user: RegisterUser){
-    return this.http.post(`${this.apiUrl}/register`, user)
-      .subscribe(
-        (res: any) => {
-          localStorage.setItem(ACCESS_TOKEN_KEY, res.access_token);
-          this.router.navigate(['']);
-        },
-        error => { this.showError(error); }
-      );
+    return this.http.post(`${this.apiUrl}/register`, user);
   }
 
   isAuthenticated(): boolean{
@@ -47,40 +39,9 @@ export class AuthService {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
     this.router.navigate(['']);
   }
-
-  private showError(error){
-    switch(error.status){
-        case 400: // validation error
-          let errors: string = "";
-          let map = new Map<string, string[]>();
-
-          if(error.error.ValidationErrors != null){
-            for (var value in error.error.ValidationErrors) {  
-                map.set(value, error.error.ValidationErrors[value])  
-            }  
-          } else {
-            for (var value in error.error) {  
-              map.set(value, error.error[value])  
-            }  
-          }
-
-          for (let [key, value] of map.entries()) {
-            value.forEach(element => { errors += `${element}\n`;  });
-            errors += `\n`;
-          }
-
-          alert(errors);
-        break;
-        case 401: // when send don't corrent data
-          alert(error.error.message);
-          break;
-        case 500: // server error
-            alert("Ops! An error occurred on the server...");
-        break;
-        default:
-            alert("Ops! An unexpected error...");
-            break;
-    }
+  
+  public get ACCESS_TOKEN_KEY() : string {
+    return ACCESS_TOKEN_KEY;
   }
-
+  
 }

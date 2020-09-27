@@ -13,7 +13,7 @@ namespace BikeRental.ViewModels.Auth
         public string Password { get; set; }
 
         [Required]
-        [Compare("Password")]
+        [Compare("Password", ErrorMessage = "Password and Reply password do not match")]
         [MaxLength(255)]
         public string ConfirmPassword { get; set; }
     }

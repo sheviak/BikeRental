@@ -29,6 +29,15 @@ namespace BikeRental.Controllers
             return Ok(bikesVm);
         }
 
+        [HttpGet("photo")]
+        public IActionResult GetBikesWithPhoto()
+        {
+            var bikes = this.bikeService.GetBikes();
+            var bikesVm = this.mapper.Map<IEnumerable<BikePhotoViewModel>>(bikes);
+
+            return Ok(bikesVm);
+        }
+
         [HttpGet("types")]
         public IActionResult GetBikeTypes()
         {

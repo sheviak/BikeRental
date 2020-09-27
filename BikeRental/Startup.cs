@@ -19,19 +19,28 @@ namespace BikeRental
     {
         public IConfiguration Configuration { get; }
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
-            Configuration = configuration;
+
+            string environmentName;
+#if DEBUG
+            environmentName = "Development";
+#elif RELEASE
+            environmentName = "Production";
+#endif
+
+            Configuration = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile($"appsettings.{environmentName}.json")
+                .AddEnvironmentVariables()
+                .Build();
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var authOptions = Configuration.GetSection("Token");
-            var authValue = authOptions.Value;
-            services.Configure<AuthOptions>(authOptions);
-
-            var uploadPhotoOptions = Configuration.GetSection("UploadPhotoApi");
-            services.Configure<UploadPhotoApiOptions>(uploadPhotoOptions);
+            services.Configure<AuthOptions>(Configuration.GetSection("Token"));
+            services.Configure<UploadPhotoApiOptions>(Configuration.GetSection("UploadPhotoApi"));
 
             services
                 .AddAuthentication(options =>

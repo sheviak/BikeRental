@@ -4,24 +4,28 @@ import { MapService } from 'src/app/services/map.service';
 import { Bike } from 'src/app/models/bike';
 import { BikeType } from 'src/app/models/bike.type';
 import { Status } from 'src/app/models/status';
-
+import { ErrorService } from "src/app/services/error.srvice";
+import { NgEventBus } from 'ng-event-bus';
 
 @Component({
     selector: 'bike-general-app',
-    templateUrl: './bike.general.component.html',
-    providers: [ DataService, MapService ]
+    templateUrl: './bike.general.component.html'
 })
 
 export class BikeGeneralComponent implements OnInit {
 
     public bikes: Array<Bike> = [];
     public bikeTypes: Array<BikeType> = [];
-    public isLoader: boolean = false;
     public countFreeBikes: number = 0;
     public totalPrice: number = 0;
     public errors: string = "";
 
-    constructor(private dataService: DataService, private mapService: MapService){}
+    constructor(
+        private dataService: DataService, 
+        private mapService: MapService, 
+        private errorService: ErrorService,
+        private eventBus: NgEventBus
+    ){}
 
     ngOnInit(): void {
         this.loadBikeTypes();
@@ -29,7 +33,7 @@ export class BikeGeneralComponent implements OnInit {
     }
 
     public submit(bikeForm: any): void {
-        this.isLoader = true;
+        this.eventBus.cast('app:loader', true);
         let bike = this.mapService.mapToInsertBike(bikeForm.value);
         this.dataService.createBike(bike)
             .subscribe(
@@ -39,13 +43,13 @@ export class BikeGeneralComponent implements OnInit {
                     this.errors = "";
                     bikeForm.reset();
                 },
-                error => { this.showError(error); },
-                () => { this.isLoader = false; }
+                error => { this.errors = this.errorService.getError(error); this.eventBus.cast('app:loader', false); },
+                () => { this.eventBus.cast('app:loader', false); }
             );
     }
 
     public changeBikeStatus(bike: Bike): void {
-        this.isLoader = true;
+        this.eventBus.cast('app:loader', true);
         this.dataService.changeBikeStatus(bike.id)
             .subscribe(
                 (data: Bike) => {
@@ -59,13 +63,13 @@ export class BikeGeneralComponent implements OnInit {
 
                     this.showTotalPrice();
                 },
-                error => { this.showError(error); },
-                () => { this.isLoader = false; }
+                error => { this.errorService.getError(error); this.eventBus.cast('app:loader', false); },
+                () => { this.eventBus.cast('app:loader', false); }
             );
     }
 
     public delete(bike: Bike): void {
-        this.isLoader = true;
+        this.eventBus.cast('app:loader', true);
         this.dataService.deleteBike(bike.id)
             .subscribe(
                 () => { 
@@ -75,13 +79,13 @@ export class BikeGeneralComponent implements OnInit {
                     } 
                     this.countFreeBikes--;
                 },
-                error => { this.showError(error); },
-                () => { this.isLoader = false; }
+                error => { this.errorService.getError(error); this.eventBus.cast('app:loader', false); },
+                () => { this.eventBus.cast('app:loader', false); }
             );
     }
 
     private loadBikes(): void {
-        this.isLoader = true;
+        this.eventBus.cast('app:loader', true);
         this.dataService.getBikes()
             .subscribe(
                 (data: Bike[]) => {
@@ -89,57 +93,22 @@ export class BikeGeneralComponent implements OnInit {
                     this.countFreeBikes = data.filter(x => x.status == Status.Free).length;
                     this.bikes = data;
                 },
-                error => { this.showError(error); },
-                () => { this.isLoader = false; }
+                error => { this.errorService.getError(error); this.eventBus.cast('app:loader', false); },
+                () => { this.eventBus.cast('app:loader', false); }
             );
     }
 
     private loadBikeTypes(): void {
-        this.isLoader = true;
+        this.eventBus.cast('app:loader', true);
         this.dataService.getBikeTypes()
             .subscribe(
                 (data: BikeType[]) => { this.bikeTypes = data; },
-                error => { this.showError(error); },
-                () => { this.isLoader = false; }
+                error => { this.errorService.getError(error); this.eventBus.cast('app:loader', false); },
+                () => { this.eventBus.cast('app:loader', false); }
             );
     }
 
-    private showError(error){
-        switch(error.status){
-            case 400: // validation error
-                let map = new Map<string, string[]>();
-
-                for (var value in error.error.ValidationErrors) {  
-                    map.set(value, error.error.ValidationErrors[value])  
-                }  
-    
-                for (let [key, value] of map.entries()) {
-                    value.forEach(element => { this.errors += `${element}\n`;  });
-                    this.errors += `\n`;
-                }
-            break;
-            case 404: // not found
-                alert("This bike is not found!");
-            break;
-            case 500: // server error
-                alert("Ops! An error occurred on the server...");
-            break;
-            default:
-                alert("Ops! An unexpected error...");
-                break;
-        }
-
-        this.isLoader = false;
-    }
-
     private async showTotalPrice(){
-        // await this.delay(2000);
         this.totalPrice = this.bikes.filter(x => x.status == Status.Rented).reduce((sum, current) => sum + current.price, 0);
     }
-
-    private delay(ms: number)
-    {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
 }

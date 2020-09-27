@@ -1,7 +1,10 @@
 import { Injectable } from "@angular/core";
 import { InsertBike } from "src/app/models/insert.bike";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
+
 export class MapService {
     
     mapToInsertBike(bike: any){

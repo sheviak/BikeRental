@@ -1,3 +1,13 @@
+<div [className]="isLoader ? 'active' : 'inactive'">
+    <div class="shadow"></div>
+    <div class="popup">
+        <svg class="spinner" viewBox="0 0 50 50">
+            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+        </svg>
+        <p class="pt-3">Please wait ...</p>
+    </div>
+</div>
+
 <div class="row pt-5">
     <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand title" href="/">Awesome Bike Rental</a>

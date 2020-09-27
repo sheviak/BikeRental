@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PhotoService } from 'src/app/services/photo.service';
 import { DataService } from 'src/app/services/data.service';
-import { Bike } from 'src/app/models/bike';
+import { BikePhoto } from 'src/app/models/bike.photo';
+import { ErrorService } from "src/app/services/error.srvice";
+import { NgEventBus } from 'ng-event-bus';
 
 @Component({
   selector: 'photo-galary',
@@ -10,21 +12,19 @@ import { Bike } from 'src/app/models/bike';
 
 export class PhotoGalaryComponent implements OnInit {
 
-  public bikes: Array<Bike> = [];
+  public bikes: Array<BikePhoto> = [];
   public selectedFile: File = null;
-  public selectedBike: Bike = null;
+  public selectedBike: BikePhoto = null;
+  public errors: string = "";
 
-  public isLoader: boolean = false;
-  public photos: Array<string> = ["https://i1.imageban.ru/out/2020/09/22/d0b1baaade4786ec6a8113ca53bca49e.jpg", "https://i1.imageban.ru/out/2020/09/22/351189acef5f10c997c8976c93533ce0.jpg"];
-
-  constructor(private up: PhotoService, private ds: DataService) { }
+  constructor(private up: PhotoService, private ds: DataService, private es: ErrorService, private eventBus: NgEventBus) { }
 
   ngOnInit(): void {
-    this.isLoader = true;
-    this.ds.getBikes().subscribe(
-        (data: Bike[]) => { this.bikes = data; },
-        error => { console.log(error); this.isLoader = false; },
-        () => { this.isLoader = false; }
+    this.eventBus.cast('app:loader', true);
+    this.ds.getBikesWithPhoto().subscribe(
+        (data: BikePhoto[]) => { this.bikes = data; },
+        error => { this.es.getError(error); this.eventBus.cast('app:loader', false); },
+        () => { this.eventBus.cast('app:loader', false); }
       );
   }
 
@@ -33,17 +33,20 @@ export class PhotoGalaryComponent implements OnInit {
   }
 
   submit() {
-    // this.isLoader = true;
-
+    this.eventBus.cast('app:loader', true);
     this.up.uploadPhoto(this.selectedFile, this.selectedBike.id)
       .subscribe(
         (data: any) => {
-          console.log(data);
-          
-
+          let index = this.bikes.indexOf(this.selectedBike, 0);
+          if (index > -1) {
+              this.bikes.splice(index, 1);
+          } 
+          this.bikes.push(data);   
+          this.selectedFile = null;
+          this.selectedBike = null;
         },
-        error => { console.log(error); },
-        () => { this.isLoader = false; }
+        error => { this.errors = this.es.getError(error); this.eventBus.cast('app:loader', false); },
+        () => { this.eventBus.cast('app:loader', false); }
       );
   }
 

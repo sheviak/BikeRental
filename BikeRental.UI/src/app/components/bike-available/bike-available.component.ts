@@ -1,12 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { DataService } from 'src/app/services/data.service';
-import { MapService } from 'src/app/services/map.service';
 import { Bike } from 'src/app/models/bike'
 
 @Component({
     selector: 'bike-available-app',
-    templateUrl: './bike-available.component.html',
-    providers: [DataService, MapService]
+    templateUrl: './bike-available.component.html'
 })
 
 export class BikeAvailableComponent {

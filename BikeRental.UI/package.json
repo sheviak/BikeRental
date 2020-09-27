@@ -18,6 +18,7 @@
     "@angular/router": "~10.0.0",
     "@auth0/angular-jwt": "^5.0.1",
     "core-js": "^2.4.1",
+    "ng-event-bus": "^1.2.0",
     "rxjs": "~6.5.5",
     "url-polyfill": "^1.1.10",
     "zone.js": "~0.10.3"

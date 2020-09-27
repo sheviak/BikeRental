@@ -16,6 +16,10 @@ export class DataService {
     getBikes() {
         return this.http.get(this.url);
     }
+
+    getBikesWithPhoto() {
+        return this.http.get(this.url + "/photo");
+    }
      
     getBikeTypes() {    
         return this.http.get(this.url + '/types');
