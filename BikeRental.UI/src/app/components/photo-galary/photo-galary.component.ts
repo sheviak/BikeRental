@@ -16,6 +16,7 @@ export class PhotoGalaryComponent implements OnInit {
   public selectedFile: File = null;
   public selectedBike: BikePhoto = null;
   public errors: string = "";
+  public image;
 
   constructor(private up: PhotoService, private ds: DataService, private es: ErrorService, private eventBus: NgEventBus) { }
 
@@ -44,6 +45,7 @@ export class PhotoGalaryComponent implements OnInit {
           this.bikes.push(data);   
           this.selectedFile = null;
           this.selectedBike = null;
+          this.image = null;
         },
         error => { this.errors = this.es.getError(error); this.eventBus.cast('app:loader', false); },
         () => { this.eventBus.cast('app:loader', false); }

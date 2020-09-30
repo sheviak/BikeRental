@@ -6,22 +6,25 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="name">Bike name</label>
-                        <input type="text" placeholder="Super bike" class="form-control" id="name" name="name" ngModel required>
+                        <input type="text" placeholder="Super bike" class="form-control" id="name" name="name" [(ngModel)]="bikeForm.name" #name="ngModel" required>
+                        <p class="text-danger" *ngIf="name.touched && name.invalid">Name filed is required</p>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="type">Bike type</label>
-                        <select class="form-control" id="type" name="type" ngModel required>
+                        <select class="form-control" id="type" name="type" [(ngModel)]="bikeForm.type" #type="ngModel" required>
                             <option value="" disabled selected>Select bike type</option>
                             <option *ngFor="let type of bikeTypes" [ngValue]="type">{{ type.name }}</option>
                         </select>
+                        <p class="text-danger" *ngIf="type.touched && type.invalid">Type filed is required</p>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class="form-group">
                         <label for="price">Rent price</label>
-                        <input type="number" min="0" step="0.1" placeholder="10.0" class="form-control" id="price" name="price" ngModel required>
+                        <input type="number" min="0" step="0.1" placeholder="10.0" class="form-control" id="price" name="price" [(ngModel)]="bikeForm.price" #price="ngModel" required>
+                        <p class="text-danger" *ngIf="price.touched &&  price.invalid">Price must be equal 0 or more 0</p>
                     </div>
                 </div>
                 <div class="col-2">

@@ -108,7 +108,7 @@ export class BikeGeneralComponent implements OnInit {
             );
     }
 
-    private async showTotalPrice(){
+    private showTotalPrice(){
         this.totalPrice = this.bikes.filter(x => x.status == Status.Rented).reduce((sum, current) => sum + current.price, 0);
     }
 }

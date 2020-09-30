@@ -4,7 +4,7 @@
         <div class="col-4">
             <div class="form-group">
                 <label for="image">Selected file input</label>
-                <input type="file" class="form-control-file" id="image" name="image" (change)="onFileChanged($event)" ngModel required>
+                <input type="file" class="form-control-file" id="image" name="image" [(ngModel)]="image" (change)="onFileChanged($event)" required>
             </div>
             <div class="form-group">
                 <label for="bikeId">Selected bike</label>
@@ -13,7 +13,7 @@
                     <option *ngFor="let bike of bikes" [ngValue]="bike">{{ bike.name }} / ${{ bike.price }}</option>
                 </select>
             </div>
-            <input type="submit" value="Send" [disabled]="form.invalid" class="btn btn-submit">
+            <input type="submit" value="Send" [disabled]="form.invalid || selectedBike == null" class="btn btn-submit">
             <p>{{ errors }}</p>
         </div>
     </form>
